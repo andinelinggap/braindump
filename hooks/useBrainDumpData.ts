@@ -123,7 +123,10 @@ export const useBrainDumpData = (userId: string | undefined) => {
     };
 
     const loadData = useCallback(async () => {
-        if (!userId) return; // Jangan load jika belum login
+        if (!userId) {
+            setLoading(false);
+            return; 
+        }
 
         try {
             if (items.length === 0) setLoading(true);
