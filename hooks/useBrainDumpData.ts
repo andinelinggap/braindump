@@ -179,7 +179,31 @@ export const useBrainDumpData = (userId: string | undefined) => {
         }
     }, [userId]); 
 
+useEffect(() => {
+        loadData();
+    }, [loadData]);
 
+    // 2. Panggil data ulang otomatis saat pindah tab/buka aplikasi lagi (Auto-sync)
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                loadData();
+            }
+        };
+
+        const handleFocus = () => {
+             loadData();
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('focus', handleFocus);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [loadData]);
+    
     const processItemInBackground = async (text: string, tempId: string) => {
         try {
             const currentTags = new Set<string>();
