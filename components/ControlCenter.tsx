@@ -12,7 +12,7 @@ import { SyncStatus, AppSettings, BudgetConfig, BudgetRule, BrainDumpItem, Skill
 import { getGithubConfig, saveGithubConfig, clearGithubConfig, GithubConfig } from '../services/githubService';
 import { getGeminiKey, saveGeminiKey, DEFAULT_PROMPT } from '../services/geminiService';
 import { exportToExcel } from '../services/exportService';
-
+import { logout } from '../src/firebase';
 interface ControlCenterProps {
     isOpen: boolean;
     onClose: () => void;
@@ -699,6 +699,16 @@ const ControlCenter: React.FC<ControlCenterProps> = ({
                                                     >
                                                         Reset Everything
                                                     </button>
+                                                    <button 
+                                                         onClick={() => {
+                                                      if (window.confirm('Yakin ingin logout?')) {
+                                                       logout();
+                                                                          }
+                                                                         }} 
+                                                             className="w-full mt-6 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 font-semibold rounded-xl transition-colors"
+                                                                                        >
+                                                                                                Log Out
+                                                                                        </button>
                                                 </div>
                                             </section>
                                         </div>

@@ -111,9 +111,13 @@ export const useBrainDumpData = (userId: string | undefined) => {
                 appSettings: newAppSettings || appSettings
             };
 
-            // Simpan ke Firestore
+            // === TAMBAHKAN TRIK INI ===
+            // Trik untuk menghapus SEMUA nilai "undefined" di dalam object/array
+            const cleanData = JSON.parse(JSON.stringify(dataToSave));
+
+            // Simpan ke Firestore menggunakan data yang sudah bersih
             const userRef = doc(db, 'users', userId);
-            await setDoc(userRef, dataToSave, { merge: true });
+            await setDoc(userRef, cleanData, { merge: true });
             
             setSyncStatus('synced');
         } catch (e) {
@@ -203,7 +207,7 @@ useEffect(() => {
             window.removeEventListener('focus', handleFocus);
         };
     }, [loadData]);
-    
+
     const processItemInBackground = async (text: string, tempId: string) => {
         try {
             const currentTags = new Set<string>();
