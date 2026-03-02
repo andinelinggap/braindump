@@ -4,7 +4,7 @@ import { ItemType, BrainDumpItem } from '../types';
 const GEMINI_SETTINGS_KEY = 'braindump_gemini_key';
 
 export const getGeminiKey = (): string => {
-  return localStorage.getItem(GEMINI_SETTINGS_KEY) || process.env.API_KEY || '';
+  return localStorage.getItem(GEMINI_SETTINGS_KEY) || import.meta.env.VITE_GEMINI_API_KEY || '';
 };
 
 export const saveGeminiKey = (key: string) => {
